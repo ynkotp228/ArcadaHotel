@@ -1,7 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import HotelRoom from '../components/HotelRoom.astro';
 ---
 
 <Layout title="Готель">
-    <h1>Готель</h1> 
+    <Header />
+    <Hero title="Arcada Hotel" description="Ваш ідеальний вибір апартаментів у самому серці Львова" heroButtontext="Забронювати номер" heroButtonLink="/rooms" showAddress={false} showSocialMedia={false} />
+    <HotelRoom />
+    
 </Layout>   
