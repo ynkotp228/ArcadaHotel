@@ -1,7 +1,7 @@
 ---
 const { roomType, roomDescription, bgimage, roomPrice } = Astro.props;
 ---
-<div>
+<div  style={`background-image: url('${bgimage}')`}>
     <h3>{roomType}</h3>
     <p>{roomDescription}</p>
     <p>{roomPrice} </p>

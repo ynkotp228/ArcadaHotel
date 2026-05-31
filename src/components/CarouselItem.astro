@@ -3,7 +3,7 @@ const { CarouselTitle, slogan, bgimage, link, buttonText } = Astro.props;
 
 ---
 
-<div>
+<div  style={`background-image: url('${bgimage}')`}>
   <h3>{CarouselTitle}</h3>
   <p>{slogan}</p>
   <a href ={link} class="">{buttonText}</a>

@@ -4,9 +4,8 @@ const { cardTitle, cardDescription, cardImage, cardButtonText } = Astro.props;
 
 
 
-<div>
+<div style={`background-image: url('${cardImage}')`}>
     <h2>{cardTitle}</h2>
     <div><p>{cardDescription}</p></div>
-    <img src={cardImage} alt={cardTitle} />
     <button>{cardButtonText}</button>
 </div>

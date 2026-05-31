@@ -1,4 +1,11 @@
-<section>
+---
+interface Props {
+    bgimage: string;
+}
+const { bgimage } = Astro.props;
+---
+
+<section  style={`background-image: url('${bgimage}')`}>
     <h2>Про нас</h2>
     <div> 
         <div> 

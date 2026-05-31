@@ -15,9 +15,13 @@ const { showSocialMedia = false, showAddress = false, title, description, heroBu
 
 
 
-<section id="hero" class="grid grid-cols-3 1fr 2fr 1rfr background-image: url(src/assets/images/{bgimage})">
+<section
+    id="hero"
+    class="grid grid-cols-3 bg-cover bg-center bg-no-repeat min-h-screen"
+    style={`background-image: url('${bgimage}')`}
+>
     {showAddress && <Adress />}
-    <div>
+    <div >
         <h1>{title}</h1>
         <p>{description}</p>
         <a href={heroButtonLink} class="btn">{heroButtontext}</a>

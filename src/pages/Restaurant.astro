@@ -3,26 +3,29 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Card from '../components/Card.astro';
- 
+import heroImage from '../assets/images/carouselCard2.webp';
 import AskForm from '../components/AskForm.astro';
 import Footer from '../components/Footer.astro';
+import restaurantCard1 from '../assets/images/restaurantCard1.webp';
+import restaurantCard2 from '../assets/images/restaurantCard2.webp';
+import restaurantCard3 from '../assets/images/restaurantCard3.webp';
 const restaurantCard = [
     {
         cardTitle: "Arcada Restaurant",
         cardDescription: "Насолоджуйтеся вишуканими стравами та неповторною атмосферою в ресторані Arcada, де кожна страва - це витвір мистецтва.",
-        cardImage: "/images/restaurant.webp",
+        cardImage: restaurantCard1.src,
         cardButtonText: "Переглянути меню"
     },
     {
         cardTitle: "Святкування в Arcada Restaurant",
         cardDescription: " Плануєте особливу подію? Наш ресторан ідеально підходить для святкувань, пропонуючи індивідуальне меню та неповторну атмосферу для вашого заходу.",
-        cardImage: "/images/restaurantEvents.webp",
+        cardImage: restaurantCard2.src,
         cardButtonText: "Замовити подію"
     },
     {
         cardTitle: "Гастрономічні майстер-класи",
         cardDescription: "Приєднуйтесь до наших гастрономічних майстер-класів та навчіться готувати вишукані страви під керівництвом наших шеф-кухарів.",
-        cardImage: "/images/restaurantMasterClass.webp",
+        cardImage: restaurantCard3.src,
         cardButtonText: "Записатися на майстер-клас"
     }
 
@@ -33,7 +36,7 @@ const restaurantCard = [
 ---
 <Layout title="Ресторан">
      <Header />
-    <Hero title="Arcada Restaurant" description="Смакуйте найкращі страви у нашому ресторані з видом на місто" heroButtontext="Забронювати столик" heroButtonLink="/restaurant" showAddress={false} showSocialMedia={false} />
+    <Hero bgimage={heroImage.src} title="Arcada Restaurant" description="Смакуйте найкращі страви у нашому ресторані з видом на місто" heroButtontext="Забронювати столик" heroButtonLink="/restaurant" showAddress={false} showSocialMedia={false} />
     <Card items={restaurantCard} />
     <AskForm />
     <Footer />

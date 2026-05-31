@@ -6,12 +6,14 @@ import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
 import Contacts from '../components/Contacts.astro';
 import AboutUs from '../components/AboutUs.astro';
+import heroImg from '../assets/images/heroMainPage.webp';
+import AboutUsImg from "../assets/images/aboutUsMainPage.webp";
 ---
 <Layout>
 	<Header />
-	<Hero bgimage='heroMain.webp' title="Astro Hotel" description='Ласкаво просимо на наш офіційний сайт ресторанно-готельного комплексу у самому серці Львова' heroButtonLink='' heroButtontext='Наші апартаменти' showAddress={true} showSocialMedia={true} />
+	<Hero bgimage={heroImg.src} title="Astro Hotel" description='Ласкаво просимо на наш офіційний сайт ресторанно-готельного комплексу у самому серці Львова' heroButtonLink='' heroButtontext='Наші апартаменти' showAddress={true} showSocialMedia={true} />
 	<Services />
-	<AboutUs />
+	<AboutUs bgimage={AboutUsImg.src} />
 	<Contacts />
 	<Footer />
 
