@@ -1,31 +1,62 @@
 ---
-import  Adress from './Adress.astro';   
+import Adress from './Adress.astro';
 import SocialMedia from './SocialMedia.astro';
 interface Props {
-    title: string;
-    description: string;
-    heroButtontext: string;
-    heroButtonLink: string;
-    showAddress: boolean;
-    showSocialMedia: boolean;
-    bgimage: string;
+	title: string;
+	description: string;
+	heroButtontext: string;
+	heroButtonLink: string;
+	showAddress: boolean;
+	showSocialMedia: boolean;
+	bgimage: string;
 }
-const { showSocialMedia = false, showAddress = false, title, description, heroButtontext, heroButtonLink, bgimage } = Astro.props;
+const {
+	showSocialMedia = false,
+	showAddress = false,
+	title,
+	description,
+	heroButtontext,
+	heroButtonLink,
+	bgimage,
+} = Astro.props;
 ---
 
-
-
 <section
-    id="hero"
-    class="grid grid-cols-3 bg-cover bg-center bg-no-repeat min-h-screen"
-    style={`background-image: url('${bgimage}')`}
+	id="hero"
+	class="relative flex min-h-[88vh] items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
+	style={`background-image: url('${bgimage}')`}
 >
-    {showAddress && <Adress />}
-    <div >
-        <h1>{title}</h1>
-        <p>{description}</p>
-        <a href={heroButtonLink} class="btn">{heroButtontext}</a>
-    </div>
-     {showSocialMedia && <SocialMedia />}
+	<!-- Затемнення для читабельності тексту -->
+	<div
+		class="absolute inset-0 bg-linear-to-b from-navy/70 via-navy/45 to-navy/80"
+		aria-hidden="true"
+	>
+	</div>
 
+	<!-- Центральний контент -->
+	<div
+		class="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-5 py-24 text-center text-cream"
+	>
+		<h1
+			class="text-cream! text-4xl font-bold leading-tight drop-shadow-md sm:text-5xl md:text-6xl"
+		>
+			{title}
+		</h1>
+		<p
+			class="mt-5 max-w-2xl text-base leading-relaxed text-cream/90 drop-shadow sm:text-lg"
+		>
+			{description}
+		</p>
+		<a href={heroButtonLink} class="btn mt-8 text-base">{heroButtontext}</a>
+	</div>
+
+	<!-- Адреса та соцмережі (тільки на головній) -->
+	{
+		(showAddress || showSocialMedia) && (
+			<div class="relative z-10 mx-auto -mt-8 flex w-full max-w-6xl flex-col items-center gap-6 px-6 pb-12 sm:flex-row sm:justify-between sm:gap-4">
+				{showAddress ? <Adress /> : <span class="hidden sm:block" />}
+				{showSocialMedia && <SocialMedia />}
+			</div>
+		)
+	}
 </section>

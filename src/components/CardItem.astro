@@ -1,11 +1,37 @@
 ---
-const { cardTitle, cardDescription, cardImage, cardButtonText } = Astro.props;
+const { cardTitle, cardDescription, cardImage, cardButtonText, reverse } =
+	Astro.props;
 ---
 
+<article
+	class:list={[
+		'grid items-center gap-6 overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5 md:gap-0',
+		'md:grid-cols-2',
+	]}
+>
+	<!-- Зображення -->
+	<div
+		class:list={[
+			'h-60 w-full bg-cover bg-center md:h-full md:min-h-88',
+			reverse ? 'md:order-2' : 'md:order-1',
+		]}
+		style={`background-image: url('${cardImage}')`}
+		role="img"
+		aria-label={cardTitle}
+	>
+	</div>
 
-
-<div style={`background-image: url('${cardImage}')`}>
-    <h2>{cardTitle}</h2>
-    <div><p>{cardDescription}</p></div>
-    <button>{cardButtonText}</button>
-</div>
+	<!-- Текст -->
+	<div
+		class:list={[
+			'p-7 sm:p-9 md:p-10',
+			reverse ? 'md:order-1' : 'md:order-2',
+		]}
+	>
+		<h3 class="mb-3 text-2xl font-semibold sm:text-3xl">{cardTitle}</h3>
+		<p class="mb-6 text-sm leading-relaxed text-ink/75 sm:text-base">
+			{cardDescription}
+		</p>
+		<a href="/soon" class="btn">{cardButtonText}</a>
+	</div>
+</article>

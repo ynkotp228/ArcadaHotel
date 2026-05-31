@@ -5,12 +5,12 @@ import Hero from '../components/Hero.astro';
 import HotelRoom from '../components/HotelRoom.astro';
 import AskForm from '../components/AskForm.astro';
 import Footer from '../components/Footer.astro';
-
+import heroImage from '../assets/images/carouselCard1.webp';
 ---
 
-<Layout title="Готель">
+<Layout title="Готель — Arcada Hotel">
     <Header />
-    <Hero  bgimage='/carouselCard1.webp' title="Arcada Hotel" description="Ваш ідеальний вибір апартаментів у самому серці Львова" heroButtontext="Забронювати номер" heroButtonLink="/rooms" showAddress={false} showSocialMedia={false} />
+    <Hero  bgimage={heroImage.src} title="Arcada Hotel" description="Ваш ідеальний вибір апартаментів у самому серці Львова" heroButtontext="Забронювати номер" heroButtonLink="/soon" showAddress={false} showSocialMedia={false} />
     <HotelRoom />
     <AskForm />
     <Footer />

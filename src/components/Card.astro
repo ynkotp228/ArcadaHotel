@@ -2,23 +2,28 @@
 import CardItem from './CardItem.astro';
 const { items } = Astro.props;
 interface CardProps {
-    cardTitle: string;
-    cardDescription: string;
-    cardImage: string;
-    cardButtonText: string;
+	cardTitle: string;
+	cardDescription: string;
+	cardImage: string;
+	cardButtonText: string;
 }
 interface Props {
-    items: CardProps[];
+	items: CardProps[];
 }
- 
 ---
-<section >
-    {items.map((item) => (
-        <CardItem
-            cardTitle={item.cardTitle}
-            cardDescription={item.cardDescription}
-            cardImage={item.cardImage}
-            cardButtonText={item.cardButtonText}
-        />
-    ))}
+
+<section class="section">
+	<div class="flex flex-col gap-8 md:gap-12">
+		{
+			items.map((item, i) => (
+				<CardItem
+					cardTitle={item.cardTitle}
+					cardDescription={item.cardDescription}
+					cardImage={item.cardImage}
+					cardButtonText={item.cardButtonText}
+					reverse={i % 2 === 1}
+				/>
+			))
+		}
+	</div>
 </section>

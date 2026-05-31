@@ -1,23 +1,106 @@
 ---
-import BurgerMenu from "./BurgerMenu.astro"
+import BurgerMenu from './BurgerMenu.astro';
+import logo from '../assets/images/logo.webp';
+
+const links = [
+	{ href: '/', label: 'Головна' },
+	{ href: '/Hotel', label: 'Готель' },
+	{ href: '/Restaurant', label: 'Ресторан' },
+	{ href: '/ConferenceHall', label: 'Конференц-зали' },
+];
 ---
 
+<header class="sticky top-0 z-40 bg-cream/85 backdrop-blur-md shadow-sm">
+	<div
+		class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6"
+	>
+		<a href="/" class="flex items-center gap-3">
+			<img
+				src={logo.src}
+				alt="Arcada Hotel"
+				class="h-11 w-11 rounded-full object-cover ring-2 ring-cream-dark"
+			/>
+			<span
+				class="font-display text-lg font-semibold text-navy sm:text-xl"
+			>
+				Arcada Hotel
+			</span>
+		</a>
 
-<header class="sticky top-0 z-30">
-    <div class="flex p-4 bg-gray-800 text-white w-100%">
-        <BurgerMenu />
-        <p> Години роботи: 24/7 </p>
-        <a href="/" class="flex item-center gap-2">
-            <img src="src/assets/images/logo.webp" alt="Logo" class="w-100 h-50"/>
-            <h1>Arcada Hotel</h1>
-        </a>
-        <span> Телефон: +38 (044) 123-45-67 </span>
-        <span> Емейл: arcada@ua.com</span>
-    </div>
-    <nav id="nav" class="hidden gap-4 p-4 bg-gray-700 text-white">
-        <a href="/">Головна</a>
-        <a href="/Hotel">Готель</a>
-        <a href="/Restaurant">Ресторан</a>
-        <a href="/ConferenceHall">Конференц-зали</a>
-    </nav>
+		<div class="hidden items-center gap-6 text-sm text-ink/70 lg:flex">
+			<span>Години роботи: 24/7</span>
+			<a href="tel:+380441234567" class="transition hover:text-bronze">
+				+38 (044) 123-45-67
+			</a>
+		</div>
+
+		<BurgerMenu />
+	</div>
 </header>
+
+<!-- Бічна панель (off-canvas) -->
+<div
+	id="sidebar-overlay"
+	class="pointer-events-none fixed inset-0 z-50 bg-navy/50 opacity-0 backdrop-blur-sm transition-opacity duration-300"
+	aria-hidden="true"
+>
+</div>
+
+<aside
+	id="sidebar"
+	class="fixed left-0 top-0 z-50 flex h-full w-72 max-w-[85vw] -translate-x-full flex-col bg-navy text-cream shadow-2xl transition-transform duration-300 ease-out"
+	aria-hidden="true"
+>
+	<div class="flex items-center justify-between border-b border-white/10 px-6 py-5">
+		<div class="flex items-center gap-3">
+			<img
+				src={logo.src}
+				alt="Arcada Hotel"
+				class="h-10 w-10 rounded-full object-cover ring-2 ring-white/20"
+			/>
+			<span class="font-display text-lg font-semibold">Arcada</span>
+		</div>
+		<button
+			type="button"
+			id="sidebar-close"
+			aria-label="Закрити меню"
+			class="inline-flex h-9 w-9 items-center justify-center rounded-full text-cream/80 transition hover:bg-white/10 hover:text-white"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="22"
+				height="22"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+		</button>
+	</div>
+
+	<nav class="flex flex-1 flex-col gap-1 px-4 py-6">
+		{
+			links.map((link) => (
+				<a
+					href={link.href}
+					class="rounded-lg px-4 py-3 text-base font-medium text-cream/90 transition hover:bg-white/10 hover:text-white"
+				>
+					{link.label}
+				</a>
+			))
+		}
+	</nav>
+
+	<div class="border-t border-white/10 px-6 py-5 text-sm text-cream/70">
+		<p class="mb-1">вул. Володимира Винниченка, 26, Львів</p>
+		<a href="tel:+380441234567" class="transition hover:text-gold">
+			+38 (044) 123-45-67
+		</a>
+	</div>
+</aside>

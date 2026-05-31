@@ -1,25 +1,116 @@
 ---
-
+// Форма зворотного зв'язку. Надсилання через Formspree (AJAX, без перезавантаження).
 ---
-<section>
-    <div>
-        <form id="form">
 
-            <fieldset>
-                <legend>Залиште свої запитання</legend>
-                <label for="name">Ваше ім'я:</label>
-                <input type="text" id="name" name="name" minlength="2" required, placeholder="Мінімум 2 символа">
+<section class="bg-cream-dark/40">
+	<div class="section max-w-2xl">
+		<h2 class="section-title">Маєте запитання?</h2>
+		<div class="section-rule"></div>
+		<p class="mx-auto mb-8 max-w-xl text-center text-ink/70">
+			Залиште свої контакти — і ми зв'яжемося з вами найближчим часом.
+		</p>
 
-                <label for="tel">Ваш телефон:</label>
-                <input type="tel" id="tel" name="tel" pattern="\+380\d{9}" required, placeholder="+380XXXXXXXXX">
+		<form
+			id="ask-form"
+			action="https://formspree.io/f/xgoqbjqw"
+			method="POST"
+			class="rounded-2xl border border-cream-dark bg-white/90 p-7 shadow-lg shadow-navy/5 sm:p-9"
+		>
+			<div class="flex flex-col gap-5">
+				<div>
+					<label for="name" class="mb-1.5 block text-sm font-medium text-navy">
+						Ваше ім'я
+					</label>
+					<input
+						type="text"
+						id="name"
+						name="name"
+						minlength="2"
+						required
+						placeholder="Мінімум 2 символи"
+						class="w-full rounded-lg border border-cream-dark bg-cream/40 px-4 py-2.5 text-ink outline-none transition focus:border-bronze focus:ring-2 focus:ring-bronze/30"
+					/>
+				</div>
 
-                <label for="message">Ваше запитання:</label>
-                <textarea id="message" name="message" rows="4" minlength="10" required></textarea>
+				<div>
+					<label for="tel" class="mb-1.5 block text-sm font-medium text-navy">
+						Ваш телефон
+					</label>
+					<input
+						type="tel"
+						id="tel"
+						name="tel"
+						pattern="\+380\d{9}"
+						required
+						placeholder="+380XXXXXXXXX"
+						class="w-full rounded-lg border border-cream-dark bg-cream/40 px-4 py-2.5 text-ink outline-none transition focus:border-bronze focus:ring-2 focus:ring-bronze/30"
+					/>
+				</div>
 
-                <button type="submit">Надіслати</button>
+				<div>
+					<label for="message" class="mb-1.5 block text-sm font-medium text-navy">
+						Ваше запитання
+					</label>
+					<textarea
+						id="message"
+						name="message"
+						rows="4"
+						minlength="10"
+						required
+						placeholder="Розкажіть, що вас цікавить (мінімум 10 символів)"
+						class="w-full resize-y rounded-lg border border-cream-dark bg-cream/40 px-4 py-2.5 text-ink outline-none transition focus:border-bronze focus:ring-2 focus:ring-bronze/30"
+					></textarea>
+				</div>
 
-        </form>
+				<button type="submit" class="btn w-full sm:w-auto sm:self-start">
+					Надіслати
+				</button>
 
-    </div>
-    
+				<!-- Повідомлення про результат -->
+				<p
+					id="form-status"
+					class="hidden rounded-lg px-4 py-3 text-sm font-medium"
+					role="status"
+					aria-live="polite"
+				>
+				</p>
+			</div>
+		</form>
+	</div>
 </section>
+
+<script>
+	const form = document.getElementById("ask-form");
+	const status = document.getElementById("form-status");
+
+	if (form && status) {
+		const show = (msg, ok) => {
+			status.textContent = msg;
+			status.classList.remove("hidden");
+			status.classList.toggle("bg-green-100", ok);
+			status.classList.toggle("text-green-800", ok);
+			status.classList.toggle("bg-red-100", !ok);
+			status.classList.toggle("text-red-800", !ok);
+		};
+
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			const data = new FormData(form);
+			try {
+				const res = await fetch(form.action, {
+					method: "POST",
+					body: data,
+					headers: { Accept: "application/json" },
+				});
+				if (res.ok) {
+					show("Дякуємо! Ваше повідомлення надіслано.", true);
+					form.reset();
+				} else {
+					show("Не вдалося надіслати. Спробуйте пізніше.", false);
+				}
+			} catch {
+				show("Помилка мережі. Перевірте з'єднання.", false);
+			}
+		});
+	}
+</script>

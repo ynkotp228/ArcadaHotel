@@ -1,3 +1,121 @@
 @import "tailwindcss";
 
- 
+/* ============================================================
+   Arcada Hotel — design tokens (Tailwind v4 @theme)
+   Палитра взята из логотипа та фасаду готелю:
+   navy (монограма AH), бронза (обідок/двері), крем (тло),
+   gold (кований візерунок) — щоб логотип не виділявся.
+   ============================================================ */
+@theme {
+  /* Кольори бренду */
+  --color-navy: #2c3e54;
+  --color-navy-light: #3b5168;
+  --color-navy-dark: #20303f;
+
+  --color-bronze: #a67c52;
+  --color-bronze-light: #c0936a;
+  --color-bronze-dark: #875f3a;
+
+  --color-gold: #c8a24a;
+
+  --color-cream: #f3eee2;
+  --color-cream-dark: #e7dfcc;
+
+  --color-ink: #2b2620; /* основний текст */
+
+  /* Шрифти (підключаються у Layout через Google Fonts) */
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Базові стилі сторінки */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    color: var(--color-navy);
+    text-wrap: balance;
+  }
+}
+
+/* Перевикористовувані компонентні класи */
+@layer components {
+  /* Головна кнопка (бронза) */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--color-bronze);
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: 0 10px 25px -10px rgb(0 0 0 / 0.35);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  .btn:hover {
+    background-color: var(--color-bronze-dark);
+    transform: translateY(-2px);
+  }
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  /* Другорядна кнопка (контур navy) */
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 2px solid var(--color-navy);
+    padding: 0.7rem 1.7rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    background-color: transparent;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-outline:hover {
+    background-color: var(--color-navy);
+    color: #fff;
+  }
+
+  /* Обгортка секції з обмеженням ширини */
+  .section {
+    width: 100%;
+    max-width: 80rem; /* 1280px */
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    padding-block: 4rem;
+  }
+
+  /* Заголовок секції */
+  .section-title {
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Лінія-акцент під заголовком */
+  .section-rule {
+    width: 4rem;
+    height: 3px;
+    margin: 0 auto 2.5rem;
+    border-radius: 9999px;
+    background-color: var(--color-bronze);
+  }
+}

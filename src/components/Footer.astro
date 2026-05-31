@@ -1,19 +1,53 @@
-<footer>
-    <div> 
-        <div>
-            <img src="logo" alt="Arcada Hotel Logo" />
-            <p>Arcada Hotel</p>
-        </div>
-        <div>
-            <p> Не просто готель, а місце для справжнього релаксу</p>
-        </div>
-        <div>
-            <p> Телефон +38 (067) 123-45-67
-                Адрес - вул. Володимира Винниченка, 26, Львів
-            </p>
-        </div>
-    </div>
-    <div>
-        <p>Це навчальний проект для портфоліо. Усі дані вигадані, співпадіння випадкові</p>
-    </div>
+---
+import logo from '../assets/images/logo.webp';
+---
+
+<footer class="bg-navy text-cream">
+	<div class="mx-auto max-w-7xl px-5 py-12 sm:px-6">
+		<div class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:items-start">
+			<!-- Логотип -->
+			<div class="flex items-center gap-3">
+				<img
+					src={logo.src}
+					alt="Arcada Hotel"
+					class="h-12 w-12 rounded-full object-cover ring-2 ring-white/20"
+				/>
+				<span class="font-display text-xl font-semibold">Arcada Hotel</span>
+			</div>
+
+			<!-- Слоган -->
+			<div class="text-cream/80">
+				<p class="italic">
+					Не просто готель, а місце для справжнього релаксу.
+				</p>
+			</div>
+
+			<!-- Контакти -->
+			<div class="space-y-1.5 text-sm text-cream/80 sm:text-right">
+				<a
+					href="tel:+380671234567"
+					class="block transition hover:text-gold"
+				>
+					+38 (067) 123-45-67
+				</a>
+				<a
+					href="https://maps.app.goo.gl/M3DvP4njF5xMrqoo9"
+					target="_blank"
+					rel="noopener"
+					class="block transition hover:text-gold"
+				>
+					вул. Володимира Винниченка, 26, Львів
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="border-t border-white/10">
+		<p
+			class="mx-auto max-w-7xl px-5 py-5 text-center text-xs text-cream/60 sm:px-6"
+		>
+			Це навчальний проєкт для портфоліо. Усі дані вигадані, співпадіння
+			випадкові.
+		</p>
+	</div>
 </footer>

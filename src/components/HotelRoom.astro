@@ -1,16 +1,47 @@
 ---
-import familyRoom from "../assets/images/familyRoom.webp";
-import luxuryRoom from "../assets/images/luxRoom.webp";
-import halfLuxuryRoom from "../assets/images/halfLuxRoom.webp";
-import standardRoom from "../assets/images/standartRoom.webp";
-import HotelRoomItem from "./HotelRoomItem.astro"
+import familyRoom from '../assets/images/familyRoom.webp';
+import luxuryRoom from '../assets/images/luxRoom.webp';
+import halfLuxuryRoom from '../assets/images/halfLuxRoom.webp';
+import standardRoom from '../assets/images/standartRoom.webp';
+import HotelRoomItem from './HotelRoomItem.astro';
+
+const rooms = [
+	{
+		roomType: 'Стандартний номер',
+		roomDescription:
+			'Затишний номер з усім необхідним для комфортного відпочинку: зручне ліжко, робоча зона та сучасна ванна кімната.',
+		bgimage: standardRoom.src,
+		roomPrice: '1600 грн/ніч',
+	},
+	{
+		roomType: 'Люкс',
+		roomDescription:
+			'Простора кімната з вишуканим інтер’єром, панорамними вікнами та преміальними зручностями для незабутнього перебування.',
+		bgimage: luxuryRoom.src,
+		roomPrice: '2500 грн/ніч',
+	},
+	{
+		roomType: 'НапівЛюкс',
+		roomDescription:
+			'Оптимальне поєднання комфорту та ціни: збільшена площа, м’яка зона відпочинку та стильне оздоблення.',
+		bgimage: halfLuxuryRoom.src,
+		roomPrice: '2000 грн/ніч',
+	},
+	{
+		roomType: 'Сімейний номер',
+		roomDescription:
+			'Місткий номер для всієї родини з окремими спальними зонами та всім необхідним для відпочинку з дітьми.',
+		bgimage: familyRoom.src,
+		roomPrice: '3000 грн/ніч',
+	},
+];
 ---
-<section>
-    <h2>Доступні апартаменти</h2>
-    <div> 
-        <HotelRoomItem roomType="Стандартний номер" roomDescription=" " bgimage={standardRoom.src} roomPrice="1600 грн/ніч" />
-        <HotelRoomItem roomType="Люкс" roomDescription=" " bgimage={luxuryRoom.src} roomPrice="2500 грн/ніч" />
-        <HotelRoomItem roomType="НапівЛюкс" roomDescription=" " bgimage={halfLuxuryRoom.src} roomPrice="2000 грн/ніч" />
-        <HotelRoomItem roomType="Сімейний номер" roomDescription=" " bgimage={familyRoom.src} roomPrice="3000 грн/ніч" />
-    </div>    
+
+<section class="section">
+	<h2 class="section-title">Доступні апартаменти</h2>
+	<div class="section-rule"></div>
+
+	<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+		{rooms.map((room) => <HotelRoomItem {...room} />)}
+	</div>
 </section>

@@ -1,20 +1,77 @@
-<section>
-    <h2>Контакти</h2>
-    <div>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2217.8182697250036!2d24.033872111601543!3d49.84363737136376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add6cb42542b5%3A0xc754f3c29bd47a28!2z0LLRg9C70LjRhtGPINCS0L7Qu9C-0LTQuNC80LjRgNCwINCS0LjQvdC90LjRh9C10L3QutCwLCAyNiwg0JvRjNCy0ZbQsiwg0JvRjNCy0ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGMLCA3OTAwMA!5e0!3m2!1suk!2sua!4v1780166739808!5m2!1suk!2sua" class="w-full aspect-video min-h-[400px] rounded-2xl border border-slate-200 shadow-xl" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-    <div>
-        <div>
-            <img src="phone-icon" alt="Phone" />
-            <p> Телефон: +38 (067) 123-45-67</p>    
-        </div>
-        <div>
-            <img src="email-icon" alt="Email" />
-            <p>  Емейл: ArcadaHotel@gmail.com</p>
-        </div>
-        <div>
-            <img src="clock-icon" alt="Clock" />
-            <p>Години роботи: 24/7</p>
-        </div>
-    </div>
+<section class="bg-cream-dark/40">
+	<div class="section">
+		<h2 class="section-title">Контакти</h2>
+		<div class="section-rule"></div>
+
+		<div class="grid grid-cols-1 gap-8 lg:grid-cols-5">
+			<!-- Карта -->
+			<div class="lg:col-span-3">
+				<iframe
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2217.8182697250036!2d24.033872111601543!3d49.84363737136376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add6cb42542b5%3A0xc754f3c29bd47a28!2z0LLRg9C70LjRhtGPINCS0L7Qu9C-0LTQuNC80LjRgNCwINCS0LjQvdC90LjRh9C10L3QutCwLCAyNiwg0JvRjNCy0ZbQsiwg0JvRjNCy0ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGMLCA3OTAwMA!5e0!3m2!1suk!2sua!4v1780166739808!5m2!1suk!2sua"
+					class="h-full min-h-88 w-full rounded-2xl border border-cream-dark shadow-xl"
+					style="border:0;"
+					allowfullscreen
+					loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"
+					title="Розташування Arcada Hotel на карті"></iframe>
+			</div>
+
+			<!-- Контактні дані -->
+			<div
+				class="flex flex-col justify-center gap-6 rounded-2xl bg-white/90 p-8 shadow-lg shadow-navy/5 lg:col-span-2"
+			>
+				<div class="flex items-start gap-4">
+					<span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bronze/15 text-bronze">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+					</span>
+					<div>
+						<p class="text-xs font-semibold uppercase tracking-wide text-ink/50">Телефон</p>
+						<a href="tel:+380671234567" class="font-medium text-navy transition hover:text-bronze">+38 (067) 123-45-67</a>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-4">
+					<span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bronze/15 text-bronze">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 5L2 7"></path></svg>
+					</span>
+					<div>
+						<p class="text-xs font-semibold uppercase tracking-wide text-ink/50">Емейл</p>
+						<a href="mailto:ArcadaHotel@gmail.com" class="font-medium text-navy transition hover:text-bronze">ArcadaHotel@gmail.com</a>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-4">
+					<span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bronze/15 text-bronze">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+					</span>
+					<div>
+						<p class="text-xs font-semibold uppercase tracking-wide text-ink/50">Години роботи</p>
+						<p class="font-medium text-navy">Цілодобово, 24/7</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-4">
+					<span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bronze/15 text-bronze">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+					</span>
+					<div>
+						<p class="text-xs font-semibold uppercase tracking-wide text-ink/50">Адреса</p>
+						<a href="https://maps.app.goo.gl/M3DvP4njF5xMrqoo9" target="_blank" rel="noopener" class="font-medium text-navy transition hover:text-bronze">вул. Володимира Винниченка, 26, Львів</a>
+					</div>
+				</div>
+
+				<div class="border-t border-cream-dark pt-5">
+					<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/50">Соцмережі</p>
+					<div class="flex gap-3">
+						<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-navy/5 text-navy ring-1 ring-navy/10 transition hover:bg-bronze hover:text-white hover:ring-bronze">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+						</a>
+						<a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-navy/5 text-navy ring-1 ring-navy/10 transition hover:bg-bronze hover:text-white hover:ring-bronze">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>

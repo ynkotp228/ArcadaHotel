@@ -1,24 +1,55 @@
 ---
 interface Props {
-    bgimage: string;
+	bgimage: string;
 }
 const { bgimage } = Astro.props;
+
+const cards = [
+	{
+		title: 'Наша Історія',
+		text: 'Arcada Hotel був заснований у 2005 році з метою створення унікального місця для відпочинку та розваг у Львові. Ми поєднуємо сучасний комфорт з традиційною гостинністю, щоб забезпечити нашим гостям незабутній досвід.',
+	},
+	{
+		title: 'Концепція закладу',
+		text: 'Ми прагнемо створити атмосферу, де кожен гість відчуває себе особливим. Наші апартаменти обладнані всім необхідним для комфортного проживання, а ресторан пропонує страви, які задовольнять навіть найвибагливіших гурманів.',
+	},
+	{
+		title: 'Наш персонал',
+		text: 'Наша команда професіоналів з усією сердечністю прагне зробити ваше перебування у Arcada Hotel незабутнім. Ми пишаємося нашим досвідом та прагненням до ідеального обслуговування.',
+	},
+];
 ---
 
-<section  style={`background-image: url('${bgimage}')`}>
-    <h2>Про нас</h2>
-    <div> 
-        <div> 
-            <h3>Наша Історія</h3>
-            <p>Arcada Hotel був заснований у 2005 році з метою створення унікального місця для відпочинку та розваг у Львові. Ми поєднуємо сучасний комфорт з традиційною гостинністю, щоб забезпечити нашим гостям незабутній досвід.</p>
-        </div>
-        <div>
-            <h3>Концепція закладу</h3>
-            <p>Ми прагнемо створити атмосферу, де кожен гість відчуває себе особливим. Наші апартаменти обладнані всім необхідним для комфортного проживання, а ресторан пропонує страви, які задовольнять навіть найвибагливіших гурманів.</p>
-        </div>
-        <div>
-            <h3>Наш персонал</h3>
-            <p>Наша команда професіоналів з усією сердечністю прагне зробити ваш перебування у Arcada Hotel незабутнім. Ми гордимося нашим досвідом та прагненням до ідеального обслуговування.</p>
-        </div>
-    </div>
+<section
+	class="relative bg-cover bg-center bg-no-repeat"
+	style={`background-image: url('${bgimage}')`}
+>
+	<div class="absolute inset-0 bg-cream/92" aria-hidden="true"></div>
+
+	<div class="section relative">
+		<h2 class="section-title">Про нас</h2>
+		<div class="section-rule"></div>
+
+		<div
+			class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+		>
+			{
+				cards.map((card, i) => (
+					<article
+						class:list={[
+							'rounded-2xl border border-cream-dark bg-white/90 p-7 shadow-lg shadow-navy/5 transition hover:-translate-y-1 hover:shadow-xl',
+							// третя картка по центру на планшеті (2+1)
+							i === 2 && 'sm:col-span-2 sm:mx-auto sm:max-w-md lg:col-span-1 lg:mx-0 lg:max-w-none',
+						]}
+					>
+						<div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-bronze/15 text-bronze">
+							<span class="font-display text-xl font-bold">{i + 1}</span>
+						</div>
+						<h3 class="mb-3 text-xl font-semibold">{card.title}</h3>
+						<p class="text-sm leading-relaxed text-ink/75">{card.text}</p>
+					</article>
+				))
+			}
+		</div>
+	</div>
 </section>

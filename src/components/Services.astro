@@ -1,12 +1,140 @@
 ---
-import CarouselItem from "./CarouselItem.astro"
-import Carousel1 from "../assets/images/carouselCard1.webp";
-import Carousel2 from "../assets/images/carouselCard2.webp";
-import Carousel3 from "../assets/images/carouselCard3.webp";
+import CarouselItem from './CarouselItem.astro';
+import Carousel1 from '../assets/images/carouselCard1.webp';
+import Carousel2 from '../assets/images/carouselCard2.webp';
+import Carousel3 from '../assets/images/carouselCard3.webp';
+
+const slides = [
+	{
+		CarouselTitle: 'Готель',
+		slogan: 'Там, де починається ваша львівська історія',
+		bgimage: Carousel1.src,
+		link: '/Hotel',
+		buttonText: 'Переглянути номери',
+	},
+	{
+		CarouselTitle: 'Ресторан',
+		slogan: 'Смак Львова в кожній страві',
+		bgimage: Carousel2.src,
+		link: '/Restaurant',
+		buttonText: 'Переглянути меню',
+	},
+	{
+		CarouselTitle: 'Конференц-зали',
+		slogan: 'Ідеальне місце для бізнес-зустрічей та заходів',
+		bgimage: Carousel3.src,
+		link: '/ConferenceHall',
+		buttonText: 'Переглянути зали',
+	},
+];
 ---
-<section>
-    <h2> Наша інфраструктура </h2>
-    <CarouselItem CarouselTitle="Готель" slogan="Там, де починається ваша львівська історія" bgimage={Carousel1.src} link="/Hotel" buttonText="Переглянути номери" />
-    <CarouselItem CarouselTitle="Ресторан" slogan="Смак Львова в кожній страві" bgimage={Carousel2.src} link="/Restaurant" buttonText="Переглянути меню" />
-    <CarouselItem CarouselTitle="Конференц зали" slogan="Ідеальне місце для бізнес зустрічей та заходів" bgimage={Carousel3.src} link="/ConferenceHall" buttonText="Переглянути доступні кімнати"/>
+
+<section class="section">
+	<h2 class="section-title">Наша інфраструктура</h2>
+	<div class="section-rule"></div>
+
+	<div class="relative" data-carousel>
+		<!-- Вікно каруселі -->
+		<div class="overflow-hidden rounded-3xl">
+			<div
+				class="flex transition-transform duration-500 ease-out"
+				data-carousel-track
+			>
+				{slides.map((slide) => <CarouselItem {...slide} />)}
+			</div>
+		</div>
+
+		<!-- Стрілка вліво -->
+		<button
+			type="button"
+			data-carousel-prev
+			aria-label="Попередній слайд"
+			class="absolute left-3 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-cream/90 text-navy shadow-lg ring-1 ring-black/5 transition hover:bg-cream sm:left-5"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<polyline points="15 18 9 12 15 6"></polyline>
+			</svg>
+		</button>
+
+		<!-- Стрілка вправо -->
+		<button
+			type="button"
+			data-carousel-next
+			aria-label="Наступний слайд"
+			class="absolute right-3 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-cream/90 text-navy shadow-lg ring-1 ring-black/5 transition hover:bg-cream sm:right-5"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<polyline points="9 18 15 12 9 6"></polyline>
+			</svg>
+		</button>
+
+		<!-- Крапки -->
+		<div
+			class="mt-5 flex justify-center gap-2.5"
+			data-carousel-dots
+		>
+			{
+				slides.map((_, i) => (
+					<button
+						type="button"
+						data-carousel-dot={i}
+						aria-label={`Слайд ${i + 1}`}
+						class="h-2.5 w-2.5 rounded-full bg-navy/25 transition-all"
+					/>
+				))
+			}
+		</div>
+	</div>
 </section>
+
+<script>
+	const root = document.querySelector("[data-carousel]");
+	if (root) {
+		const track = root.querySelector("[data-carousel-track]");
+		const slides = track ? Array.from(track.children) : [];
+		const dots = Array.from(root.querySelectorAll("[data-carousel-dot]"));
+		const prevBtn = root.querySelector("[data-carousel-prev]");
+		const nextBtn = root.querySelector("[data-carousel-next]");
+		const total = slides.length;
+		let index = 0;
+
+		const render = () => {
+			if (track) track.style.transform = `translateX(-${index * 100}%)`;
+			dots.forEach((dot, i) => {
+				const active = i === index;
+				dot.classList.toggle("bg-bronze", active);
+				dot.classList.toggle("w-6", active);
+				dot.classList.toggle("bg-navy/25", !active);
+			});
+		};
+
+		const go = (i) => {
+			index = (i + total) % total;
+			render();
+		};
+
+		nextBtn?.addEventListener("click", () => go(index + 1));
+		prevBtn?.addEventListener("click", () => go(index - 1));
+		dots.forEach((dot, i) => dot.addEventListener("click", () => go(i)));
+
+		// Свайп на тач-екранах
+		let startX = 0;
+		let dragging = false;
+		root.addEventListener(
+			"touchstart",
+			(e) => {
+				startX = e.touches[0].clientX;
+				dragging = true;
+			},
+			{ passive: true }
+		);
+		root.addEventListener("touchend", (e) => {
+			if (!dragging) return;
+			dragging = false;
+			const dx = e.changedTouches[0].clientX - startX;
+			if (Math.abs(dx) > 50) go(dx < 0 ? index + 1 : index - 1);
+		});
+
+		render();
+	}
+</script>

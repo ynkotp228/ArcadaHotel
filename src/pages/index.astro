@@ -9,9 +9,9 @@ import AboutUs from '../components/AboutUs.astro';
 import heroImg from '../assets/images/heroMainPage.webp';
 import AboutUsImg from "../assets/images/aboutUsMainPage.webp";
 ---
-<Layout>
+<Layout title="Arcada Hotel — Готель у серці Львова">
 	<Header />
-	<Hero bgimage={heroImg.src} title="Astro Hotel" description='Ласкаво просимо на наш офіційний сайт ресторанно-готельного комплексу у самому серці Львова' heroButtonLink='' heroButtontext='Наші апартаменти' showAddress={true} showSocialMedia={true} />
+	<Hero bgimage={heroImg.src} title="Arcada Hotel" description='Ласкаво просимо на наш офіційний сайт ресторанно-готельного комплексу у самому серці Львова' heroButtonLink='/Hotel' heroButtontext='Наші апартаменти' showAddress={true} showSocialMedia={true} />
 	<Services />
 	<AboutUs bgimage={AboutUsImg.src} />
 	<Contacts />
