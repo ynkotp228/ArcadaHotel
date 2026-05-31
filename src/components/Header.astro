@@ -1,16 +1,23 @@
+---
+import BurgerMenu from "./BurgerMenu.astro"
+---
+
+
 <header class="sticky top-0 z-30">
-    <nav class="flex p-4 bg-gray-800 text-white w-100%">
-        <button>
-            <a href="/">Меню</a> 
-        </button>
-        <button id="switchLang">
-            EN
-        </button>
+    <div class="flex p-4 bg-gray-800 text-white w-100%">
+        <BurgerMenu />
+        <p> Години роботи: 24/7 </p>
         <a href="/" class="flex item-center gap-2">
-            <img src="logo" alt="Logo" />
+            <img src="src/assets/images/logo.webp" alt="Logo" />
             <h1>Arcada Hotel</h1>
         </a>
         <span> Телефон: +38 (044) 123-45-67 </span>
         <span> Емейл: arcada@ua.com</span>
+    </div>
+    <nav id="nav" class="hidden gap-4 p-4 bg-gray-700 text-white">
+        <a href="/">Головна</a>
+        <a href="/Hotel">Готель</a>
+        <a href="/Restaurant">Ресторан</a>
+        <a href="/ConferenceHall">Конференц-зали</a>
     </nav>
 </header>

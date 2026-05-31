@@ -1,6 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+ 
+import AskForm from '../components/AskForm.astro';
+import Footer from '../components/Footer.astro';
+const restaurantCard = [
+    {
+        cardTitle: "Arcada Restaurant",
+        cardDescription: "Насолоджуйтеся вишуканими стравами та неповторною атмосферою в ресторані Arcada, де кожна страва - це витвір мистецтва.",
+        cardImage: "/images/restaurant.webp",
+        cardButtonText: "Переглянути меню"
+    },
+    {
+        cardTitle: "Святкування в Arcada Restaurant",
+        cardDescription: " Плануєте особливу подію? Наш ресторан ідеально підходить для святкувань, пропонуючи індивідуальне меню та неповторну атмосферу для вашого заходу.",
+        cardImage: "/images/restaurantEvents.webp",
+        cardButtonText: "Замовити подію"
+    },
+    {
+        cardTitle: "Гастрономічні майстер-класи",
+        cardDescription: "Приєднуйтесь до наших гастрономічних майстер-класів та навчіться готувати вишукані страви під керівництвом наших шеф-кухарів.",
+        cardImage: "/images/restaurantMasterClass.webp",
+        cardButtonText: "Записатися на майстер-клас"
+    }
+
+];
+     
+
+
 ---
 <Layout title="Ресторан">
-    <h1>Ресторан</h1>
+     <Header />
+    <Hero title="Arcada Restaurant" description="Смакуйте найкращі страви у нашому ресторані з видом на місто" heroButtontext="Забронювати столик" heroButtonLink="/restaurant" showAddress={false} showSocialMedia={false} />
+    <Card items={restaurantCard} />
+    <AskForm />
+    <Footer />
 </Layout>

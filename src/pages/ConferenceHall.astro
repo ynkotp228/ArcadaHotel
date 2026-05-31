@@ -1,7 +1,37 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+import AskForm from '../components/AskForm.astro';
+import Footer from '../components/Footer.astro';
+const conferenceCard = [
+    {
+        cardTitle: "Smart Conference Hall",
+        cardDescription: "Компактний простір для великих рішень. Зал Smart створений для тих, хто цінує приватність, максимальну концентрацію та швидкість взаємодії. Це ідеальне місце для конфіденційних переговорів тет-а-тет, підписання угод або оперативної роботи невеликої команди. Ергономічні меблі, якісне освітлення та повна шумоізоляція дозволять вам повністю зануритися в робочий процес, не відволікаючись на зовнішній шум.",
+        cardImage: "/images/conferenceHallSmart.webp",
+        cardButtonText: "Забронювати зал"
+    },
+    {
+        cardTitle: "Optima Conference Hall",
+        cardDescription: "Золота середина вашого бізнесу. Зал Optima поєднує в собі простір та затишок, пропонуючи гнучкі рішення для проведення середніх за масштабом заходів. Завдяки можливості трансформації простору, залу можна легко адаптувати під будь-який формат — від класичного круглого столу для засідань до лекційної посадки. Сучасний мінімалістичний дизайн налаштовує на продуктивну роботу, а велика кількість природного світла підтримує енергію учасників протягом усього дня.",
+        cardImage: "/images/conferenceHallOptima.webp",
+        cardButtonText: "Забронювати зал"
+    },
+    {
+        cardTitle: "Maxi Conference Hall",
+        cardDescription: "Простір для масштабних подій та сміливих ідей. Найбільша зала нашого готелю — Maxi — спроектована для проведення високорівневих заходів із великою кількістю учасників. Просторе приміщення, високі стелі та передові технологічні рішення гарантують, що кожен гість почуватиметься комфортно, а спікера буде чудово видно та чутно з будь-якої точки залу. Простір легко зонується під ваші потреби: від створення президії до облаштування виставкової чи фуршетної зони.",
+        cardImage: "/images/conferenceHallMaxi.webp",
+        cardButtonText: "Забронювати зал"
+    }
+
+];
 ---
 
 <Layout title="Конференц-зал">
-    <h1>Конференц-зал</h1>
+    <Header />
+    <Hero title="Arcada Conference Halls" description="Від приватних рішень до масштабних подій: зали Smart, Optima, Maxi." heroButtontext="Обрати зал" heroButtonLink="/conferencehall" showAddress={false} showSocialMedia={false} />
+    <Card items={conferenceCard} />
+    <AskForm />
+    <Footer />
 </Layout>

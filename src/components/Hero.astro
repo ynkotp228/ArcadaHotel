@@ -8,13 +8,14 @@ interface Props {
     heroButtonLink: string;
     showAddress: boolean;
     showSocialMedia: boolean;
+    bgimage: string;
 }
-const { showSocialMedia = false, showAddress = false, title, description, heroButtontext, heroButtonLink } = Astro.props;
+const { showSocialMedia = false, showAddress = false, title, description, heroButtontext, heroButtonLink, bgimage } = Astro.props;
 ---
 
 
 
-<section id="hero" class="grid grid-cols-3 1fr 2fr 1rfr">
+<section id="hero" class="grid grid-cols-3 1fr 2fr 1rfr background-image: url(src/assets/images/{bgimage})">
     {showAddress && <Adress />}
     <div>
         <h1>{title}</h1>
