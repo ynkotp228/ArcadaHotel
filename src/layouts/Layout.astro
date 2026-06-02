@@ -1,6 +1,8 @@
 ---
 import '../assets/styles/global.css';
 import ogDefault from '../assets/images/heroMainPage.webp';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 
 interface Props {
 	title?: string;
@@ -52,7 +54,9 @@ const imageURL = new URL(image, Astro.site);
 		<title>{title}</title>
 	</head>
 	<body class="bg-cream text-ink font-body antialiased">
+		<Header />
 		<slot />
+		<Footer />
 		<script>
 			import '../scripts/menu.js';
 		</script>
