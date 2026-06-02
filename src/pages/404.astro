@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
 import logo from '../assets/images/logo.webp';
 const base = import.meta.env.BASE_URL;
 ---
@@ -11,9 +12,12 @@ const base = import.meta.env.BASE_URL;
 	<main
 		class="flex min-h-[70vh] flex-col items-center justify-center px-5 py-20 text-center"
 	>
-		<img
-			src={logo.src}
+		<Image
+			src={logo}
 			alt="Arcada Hotel"
+			width={224}
+			height={224}
+			loading="eager"
 			class="mb-8 h-28 w-28 rounded-full object-cover shadow-lg ring-4 ring-cream-dark"
 		/>
 		<p

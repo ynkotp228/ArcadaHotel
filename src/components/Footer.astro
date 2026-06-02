@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import logo from '../assets/images/logo.webp';
 ---
 
@@ -7,9 +8,12 @@ import logo from '../assets/images/logo.webp';
 		<div class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:items-start">
 			 
 			<div class="flex items-center gap-3">
-				<img
-					src={logo.src}
+				<Image
+					src={logo}
 					alt="Arcada Hotel"
+					width={96}
+					height={96}
+					loading="lazy"
 					class="h-12 w-12 rounded-full object-cover ring-2 ring-white/20"
 				/>
 				<span class="font-display text-xl font-semibold">Arcada Hotel</span>
@@ -45,7 +49,7 @@ import logo from '../assets/images/logo.webp';
 		<p
 			class="mx-auto max-w-7xl px-5 py-5 text-center text-xs text-cream/60 sm:px-6"
 		>
-			Це навчальний проєкт для портфоліо. Усі дані вигадані, збіги випадкові. Будь-які збіги з реальними особами, місцями чи подіями є випадковими та не мають на меті відображення реальності.
+			Це навчальний проєкт для портфоліо. Усі дані вигадані, будь-які збіги з реальними особами, місцями чи подіями є випадковими та не мають на меті відображення реальності.
 		</p>
 	</div>
 </footer>

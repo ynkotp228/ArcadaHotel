@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Address from './Address.astro';
 import SocialMedia from './SocialMedia.astro';
 interface Props {
@@ -8,7 +10,7 @@ interface Props {
 	heroButtonLink: string;
 	showAddress: boolean;
 	showSocialMedia: boolean;
-	bgimage: string;
+	bgimage: ImageMetadata;
 }
 const {
 	showSocialMedia = false,
@@ -23,10 +25,20 @@ const {
 
 <section
 	id="hero"
-	class="relative flex min-h-[88vh] items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
-	style={`background-image: url('${bgimage}')`}
+	class="relative flex min-h-[88vh] items-center justify-center overflow-hidden"
 >
-	 
+	<!-- LCP-зображення: реальний <img> з високим пріоритетом, щоб браузер
+	     виявив і почав вантажити його одразу з HTML, не чекаючи CSS. -->
+	<Image
+		src={bgimage}
+		alt=""
+		width={1920}
+		height={1080}
+		loading="eager"
+		fetchpriority="high"
+		decoding="async"
+		class="absolute inset-0 h-full w-full object-cover"
+	/>
 	<div
 		class="absolute inset-0 bg-linear-to-b from-navy/70 via-navy/45 to-navy/80"
 		aria-hidden="true"
