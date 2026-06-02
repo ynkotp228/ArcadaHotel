@@ -10,5 +10,5 @@ export default defineConfig({
   },
   integrations: [sitemap()],
   site: 'https://ynkotp228.github.io',
-  base: '/ArcadaHotel',
+  base: '/ArcadaHotel/',
 });
