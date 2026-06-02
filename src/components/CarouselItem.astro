@@ -5,6 +5,8 @@ const { CarouselTitle, slogan, bgimage, link, buttonText } = Astro.props;
 <div
 	class="relative flex min-h-96 w-full shrink-0 grow-0 basis-full items-end overflow-hidden rounded-3xl bg-cover bg-center sm:min-h-112 md:min-h-128"
 	style={`background-image: url('${bgimage}')`}
+	role="img"
+	aria-label={CarouselTitle}
 >
 	<div
 		class="absolute inset-0 bg-linear-to-t from-navy/85 via-navy/35 to-transparent"

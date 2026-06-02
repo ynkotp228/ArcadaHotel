@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import logo from '../assets/images/logo.webp';
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="Сталася помилка — Arcada Hotel">
+	<Header />
+	<main
+		class="flex min-h-[70vh] flex-col items-center justify-center px-5 py-20 text-center"
+	>
+		<img
+			src={logo.src}
+			alt="Arcada Hotel"
+			class="mb-8 h-28 w-28 rounded-full object-cover shadow-lg ring-4 ring-cream-dark"
+		/>
+		<p
+			class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-bronze"
+		>
+			Помилка 404
+		</p>
+		<h1 class="mb-5 text-3xl sm:text-4xl md:text-5xl">Сталася помилка.</h1>
+		<p class="max-w-xl text-base leading-relaxed text-ink/75 sm:text-lg">
+			На жаль, сторінку, яку ви шукаєте, не знайдено. Можливо, її було
+			переміщено або вона ніколи не існувала.
+		</p>
+		<a href={base} class="btn mt-8">← Повернутися на головну</a>
+	</main>
+	<Footer />
+</Layout>
