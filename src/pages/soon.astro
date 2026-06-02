@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import logo from '../assets/images/logo.webp';
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Незабаром — Arcada Hotel">
@@ -28,7 +29,7 @@ import logo from '../assets/images/logo.webp';
 			можна. Усі дані вигадані, а функції бронювання — лише демонстрація
 			інтерфейсу.
 		</p>
-		<a href="/" class="btn mt-8"> ← Повернутися на головну </a>
+		<a href={base} class="btn mt-8"> ← Повернутися на головну </a>
 	</main>
 	<Footer />
 </Layout>

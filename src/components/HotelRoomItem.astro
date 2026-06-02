@@ -1,5 +1,6 @@
 ---
 const { roomType, roomDescription, bgimage, roomPrice } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
 <article
@@ -29,6 +30,6 @@ const { roomType, roomDescription, bgimage, roomPrice } = Astro.props;
 				</p>
 			)
 		}
-		<a href="/soon" class="btn mt-auto w-full">Забронювати</a>
+		<a href={`${base}soon`} class="btn mt-auto w-full">Забронювати</a>
 	</div>
 </article>
