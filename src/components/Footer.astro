@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/images/logo.webp';
+const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="bg-navy text-cream">
@@ -24,6 +25,12 @@ import logo from '../assets/images/logo.webp';
 				<p class="italic">
 					Не просто готель, а місце для справжнього релаксу.
 				</p>
+				<a
+					href={`${base}DesignSystem`}
+					class="mt-3 inline-block text-sm text-cream/70 underline decoration-bronze/60 underline-offset-4 transition hover:text-gold"
+				>
+					Дизайн-система бренду
+				</a>
 			</div>
  
 			<div class="space-y-1.5 text-sm text-cream/80 sm:text-right">

@@ -1,0 +1,529 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/images/logo.webp';
+import luxRoom from '../assets/images/luxRoom.webp';
+import carousel1 from '../assets/images/carouselCard1.webp';
+const base = import.meta.env.BASE_URL;
+
+// Кольорові токени бренду (з src/assets/styles/global.css → @theme)
+const colorFamilies = [
+	{
+		label: 'Navy · структура і глибина',
+		colors: [
+			{ name: 'Navy', hex: '#2c3e54', bg: 'bg-navy', on: 'light', varName: '--color-navy', role: 'Заголовки, темні секції, футер, оверлеї на зображеннях.' },
+			{ name: 'Navy Light', hex: '#3b5168', bg: 'bg-navy-light', on: 'light', varName: '--color-navy-light', role: 'Ховери та вторинні темні поверхні.' },
+			{ name: 'Navy Dark', hex: '#20303f', bg: 'bg-navy-dark', on: 'light', varName: '--color-navy-dark', role: 'Глибоке тло, низ градієнта-оверлея.' },
+		],
+	},
+	{
+		label: 'Bronze · акцент дії',
+		colors: [
+			{ name: 'Bronze', hex: '#a67c52', bg: 'bg-bronze', on: 'light', varName: '--color-bronze', role: 'Кнопки, лінія-розділювач, активна точка каруселі.' },
+			{ name: 'Bronze Light', hex: '#c0936a', bg: 'bg-bronze-light', on: 'light', varName: '--color-bronze-light', role: 'Акцент на темному тлі, світлі деталі.' },
+			{ name: 'Bronze Dark', hex: '#875f3a', bg: 'bg-bronze-dark', on: 'light', varName: '--color-bronze-dark', role: 'Ховер кнопок (натискання).' },
+		],
+	},
+	{
+		label: 'Акцент-деталь',
+		colors: [
+			{ name: 'Gold', hex: '#c8a24a', bg: 'bg-gold', on: 'dark', varName: '--color-gold', role: '«Брівки» (uppercase), ховер-посилання на темному тлі.' },
+		],
+	},
+	{
+		label: 'Cream та Ink · тло і текст',
+		colors: [
+			{ name: 'Cream', hex: '#f3eee2', bg: 'bg-cream', on: 'dark', varName: '--color-cream', role: 'Основне тло сторінки; текст на темних секціях.' },
+			{ name: 'Cream Dark', hex: '#e7dfcc', bg: 'bg-cream-dark', on: 'dark', varName: '--color-cream-dark', role: 'Межі карток, м’які тла, кільця.' },
+			{ name: 'Ink', hex: '#2b2620', bg: 'bg-ink', on: 'light', varName: '--color-ink', role: 'Основний текст. Контраст на cream ≈ 12:1.' },
+			{ name: 'White', hex: '#ffffff', bg: 'bg-white', on: 'dark', varName: 'bg-white/90', role: 'Поверхні карток і форм, текст на кнопках.' },
+		],
+	},
+];
+
+const typeScale = [
+	{ role: 'Hero h1', size: 'clamp(2.25 → 3.75rem)', token: 'text-4xl … md:text-6xl', cls: 'text-2xl' },
+	{ role: 'Section title', size: 'clamp(1.75, 4vw, 2.75rem)', token: '.section-title', cls: 'text-2xl' },
+	{ role: 'Заголовок картки h3', size: '1.25 – 1.5rem', token: 'text-xl / text-2xl', cls: 'text-xl' },
+	{ role: 'Основний текст', size: '1rem', token: 'text-base · leading-relaxed', cls: 'text-base' },
+	{ role: 'Дрібний / підпис', size: '0.875rem', token: 'text-sm · text-ink/70', cls: 'text-sm' },
+	{ role: 'Брівка', size: '0.75rem', token: 'uppercase · tracking-[0.2em]', cls: 'text-xs' },
+];
+
+const radii = [
+	{ title: 'Малий', value: '0.5rem', token: 'rounded-lg', desc: 'Поля вводу, інпути.', cls: 'rounded-lg', w: 'w-24' },
+	{ title: 'Середній', value: '1rem', token: 'rounded-2xl', desc: 'Картки номерів, бейджі.', cls: 'rounded-2xl', w: 'w-24' },
+	{ title: 'Великий', value: '1.5rem', token: 'rounded-3xl', desc: 'Каруселі, великі фічі.', cls: 'rounded-3xl', w: 'w-24' },
+	{ title: 'Pill', value: '9999px', token: 'rounded-full', desc: 'Кнопки, аватари, точки, бейджі.', cls: 'rounded-full', w: 'w-16' },
+];
+
+const motions = [
+	{ b: '0.2s ease', t: 'колір і transform у кнопок та посилань.' },
+	{ b: 'Ховер-підйом', t: 'кнопка −2px, картка −4px.' },
+	{ b: 'Зум фото', t: 'scale(1.05) за 500ms усередині картки.' },
+	{ b: 'Каруселя', t: 'зсув треку 500ms ease-out.' },
+	{ b: 'Шапка', t: 'backdrop-blur + cream/85, sticky.' },
+	{ b: 'Доступність', t: 'поважати prefers-reduced-motion.' },
+];
+
+const voice = [
+	{ b: 'Теплий', t: 'Говоримо як гостинний господар, а не як бланк бронювання.' },
+	{ b: 'Впевнений', t: 'Активний стан, конкретика: «Забронювати», а не «Можливо забронювати».' },
+	{ b: 'Локальний', t: 'Львів як частина характеру: «ваша львівська історія».' },
+	{ b: 'Турботливий', t: 'Помилки форми пояснюють, як виправити, без вибачень.' },
+];
+
+const dos = [
+	'Бронзу застосовувати лише для дій та акцентів, ощадливо.',
+	'Заголовки набирати Playfair Display, завжди navy.',
+	'Текст на фото ставити лише поверх navy-градієнта.',
+	'Картки білі, з тонкою cream-межею та м’якою тінню.',
+	'Одна лінія-розділювач під кожним заголовком.',
+];
+
+const donts = [
+	'Не змішувати bronze і gold в одному акценті.',
+	'Не ставити cream-текст на світле фото без оверлея.',
+	'Не набирати довгі абзаци серифом Playfair.',
+	'Не робити гострих кутів у кнопок і карток.',
+	'Не вводити новий колір поза 11 токенами палітри.',
+];
+---
+
+<Layout
+	title="Дизайн-система — Arcada Hotel"
+	description="Дизайн-система бренду Arcada Hotel: палітра, типографіка, компоненти, токени та голос бренду."
+>
+	<!-- ============ HERO ============ -->
+	<section class="section text-center">
+		<Image
+			src={logo}
+			alt="Логотип Arcada Hotel"
+			width={224}
+			height={224}
+			loading="eager"
+			class="mx-auto mb-6 h-24 w-24 rounded-full object-cover shadow-lg ring-4 ring-cream-dark"
+		/>
+		<p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold">
+			Бренд-гайдлайн · Готель у серці Львова
+		</p>
+		<h1 class="mx-auto max-w-3xl text-4xl font-bold leading-tight text-navy sm:text-5xl md:text-6xl">
+			Дизайн-система Arcada Hotel
+		</h1>
+		<p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink/70 sm:text-lg">
+			Єдина мова бренду: класична арка як символ гостинності, тепла кремова
+			основа, глибокий navy та шляхетна бронза. Усе, щоб нові сторінки
+			виглядали як частина готелю.
+		</p>
+		<div class="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ink/55">
+			<span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-bronze"></span>2 шрифти</span>
+			<span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-bronze"></span>11 кольорових токенів</span>
+			<span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-bronze"></span>Playfair Display + Inter</span>
+			<span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-bronze"></span>Astro + Tailwind v4</span>
+		</div>
+	</section>
+
+	<!-- ============ 01 · ПАЛІТРА ============ -->
+	<section class="bg-cream-dark/30">
+		<div class="section">
+			<p class="mb-2 text-center text-sm font-semibold uppercase tracking-[0.25em] text-bronze">01</p>
+			<h2 class="section-title">Палітра</h2>
+			<div class="section-rule"></div>
+			<p class="mx-auto mb-10 max-w-2xl text-center text-ink/70">
+				Три родини кольору несуть увесь бренд. <b class="text-navy">Navy</b>
+				тримає заголовки й темні поверхні, <b class="text-bronze">bronze</b>
+				працює як єдиний акцент дії (кнопки, розділювачі, активні стани), а
+				<b class="text-navy">cream</b> дає основне тло й текст на темному.
+			</p>
+
+			<div class="flex flex-col gap-8">
+				{
+					colorFamilies.map((family) => (
+						<div>
+							<p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-ink/45">
+								{family.label}
+							</p>
+							<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+								{family.colors.map((c) => (
+									<div class="overflow-hidden rounded-2xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+										<div class={`flex h-24 items-end justify-end p-2 ${c.bg} ${c.name === 'Cream' || c.name === 'White' ? 'ring-1 ring-inset ring-cream-dark' : ''}`}>
+											<span class={`rounded-full px-2 py-0.5 font-mono text-[0.65rem] backdrop-blur ${c.on === 'light' ? 'bg-white/15 text-cream' : 'bg-black/5 text-ink'}`}>
+												{c.hex}
+											</span>
+										</div>
+										<div class="p-3.5">
+											<b class="block text-sm font-semibold text-ink">{c.name}</b>
+											<span class="mt-0.5 block font-mono text-xs text-bronze">{c.varName}</span>
+											<span class="mt-2 block text-xs leading-snug text-ink/65">{c.role}</span>
+										</div>
+									</div>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- ============ 02 · ТИПОГРАФІКА ============ -->
+	<section class="section">
+		<p class="mb-2 text-center text-sm font-semibold uppercase tracking-[0.25em] text-bronze">02</p>
+		<h2 class="section-title">Типографіка</h2>
+		<div class="section-rule"></div>
+		<p class="mx-auto mb-10 max-w-2xl text-center text-ink/70">
+			Пара «серифний дисплей + гротеск для тексту». Playfair Display задає
+			класичний, «готельний» тон заголовкам; Inter тримає читабельність
+			інтерфейсу та абзаців.
+		</p>
+
+		<div class="flex flex-col gap-5">
+			<!-- Display -->
+			<div class="rounded-3xl border border-cream-dark bg-white/90 p-6 shadow-lg shadow-navy/5 sm:p-9">
+				<div class="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+					<span class="text-xs font-semibold uppercase tracking-[0.15em] text-ink/50">Дисплей · заголовки h1–h3</span>
+					<span class="font-mono text-xs text-bronze">--font-display: "Playfair Display", serif</span>
+				</div>
+				<p class="font-display text-4xl font-bold leading-tight text-navy sm:text-5xl">
+					Місце, де починається<br />
+					<span class="font-medium italic">ваша львівська історія</span>
+				</p>
+				<p class="mt-4 text-sm text-ink/55">Накреслення: 500 · 600 · 700. Заголовки завжди navy, з <span class="font-mono">text-wrap: balance</span>.</p>
+			</div>
+
+			<!-- Body -->
+			<div class="rounded-3xl border border-cream-dark bg-white/90 p-6 shadow-lg shadow-navy/5 sm:p-9">
+				<div class="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+					<span class="text-xs font-semibold uppercase tracking-[0.15em] text-ink/50">Текст · інтерфейс та абзаци</span>
+					<span class="font-mono text-xs text-bronze">--font-body: "Inter", sans-serif</span>
+				</div>
+				<p class="max-w-prose text-base leading-relaxed text-ink">
+					Arcada Hotel — готель у серці Львова. Ми поєднуємо сучасний комфорт
+					із традиційною гостинністю, щоб забезпечити нашим гостям незабутній
+					досвід. Комфортна довжина рядка близько 65 символів.
+				</p>
+				<div class="mt-5 flex flex-wrap gap-x-6 gap-y-1.5 text-sm text-ink/70">
+					<span class="font-normal">Regular 400 · основний текст</span>
+					<span class="font-medium">Medium 500 · підписи</span>
+					<span class="font-semibold">SemiBold 600 · кнопки, лейбли</span>
+					<span class="font-bold">Bold 700 · акценти</span>
+				</div>
+			</div>
+
+			<!-- Scale -->
+			<div class="overflow-x-auto rounded-2xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+				<table class="w-full border-collapse text-left">
+					<thead>
+						<tr class="border-b border-cream-dark text-xs uppercase tracking-[0.12em] text-ink/50">
+							<th class="px-5 py-3 font-semibold">Роль</th>
+							<th class="px-5 py-3 font-semibold">Розмір</th>
+							<th class="px-5 py-3 font-semibold">Токен / прийом</th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							typeScale.map((row) => (
+								<tr class="border-b border-cream-dark last:border-0">
+									<td class={`whitespace-nowrap px-5 py-3 font-display font-bold text-navy ${row.cls}`}>{row.role}</td>
+									<td class="px-5 py-3 font-mono text-sm text-ink/70">{row.size}</td>
+									<td class="px-5 py-3 font-mono text-sm text-ink/70">{row.token}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============ 03 · КОМПОНЕНТИ ============ -->
+	<section class="bg-cream-dark/30">
+		<div class="section">
+			<p class="mb-2 text-center text-sm font-semibold uppercase tracking-[0.25em] text-bronze">03</p>
+			<h2 class="section-title">Компоненти</h2>
+			<div class="section-rule"></div>
+			<p class="mx-auto mb-10 max-w-2xl text-center text-ink/70">
+				Живі елементи з проєкту (можна навести курсор). Спільні правила:
+				заокруглені форми, м’яка тінь navy/5, підйом на ховері, бронза як
+				єдиний акцент дії.
+			</p>
+
+			<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+				<!-- Кнопки -->
+				<div class="overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+					<div class="border-b border-cream-dark px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">Кнопки · .btn / .btn-outline</div>
+					<div class="flex flex-col gap-4 bg-cream p-6">
+						<div class="flex flex-wrap gap-3">
+							<a href={`${base}soon`} class="btn">Забронювати</a>
+							<a href={`${base}Hotel`} class="btn-outline">Детальніше</a>
+						</div>
+						<p class="text-sm leading-relaxed text-ink/65">Первинна: бронзовий pill з тінню, на ховері темнішає й підіймається. Вторинна: контур navy, на ховері заливається.</p>
+					</div>
+				</div>
+
+				<!-- Поле форми -->
+				<div class="overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+					<div class="border-b border-cream-dark px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">Поле форми · focus-ring</div>
+					<div class="bg-cream p-6">
+						<label for="ds-name" class="mb-1.5 block text-sm font-medium text-navy">Ваше ім'я</label>
+						<input
+							id="ds-name"
+							type="text"
+							value="Оксана"
+							placeholder="Мінімум 2 символи"
+							class="w-full rounded-lg border border-cream-dark bg-cream/40 px-4 py-2.5 text-ink outline-none transition focus:border-bronze focus:ring-2 focus:ring-bronze/30"
+						/>
+						<p class="mt-2 text-xs text-ink/55">Фокус: бронзова рамка + кільце <span class="font-mono text-bronze">ring bronze/30</span>.</p>
+					</div>
+				</div>
+
+				<!-- Картка номера -->
+				<div class="overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+					<div class="border-b border-cream-dark px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">Картка номера + бейдж ціни</div>
+					<div class="flex justify-center bg-cream p-6">
+						<article class="group flex w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5 transition hover:-translate-y-1 hover:shadow-xl">
+							<div class="relative h-40 overflow-hidden">
+								<div
+									class="h-full w-full bg-cover bg-center transition duration-500 group-hover:scale-105"
+									style={`background-image: url('${luxRoom.src}')`}
+									role="img"
+									aria-label="Люкс"
+								></div>
+								<span class="absolute right-3 top-3 rounded-full bg-navy/90 px-3 py-1 text-sm font-semibold text-cream backdrop-blur">6000 грн/ніч</span>
+							</div>
+							<div class="flex flex-1 flex-col p-5">
+								<h3 class="mb-2 text-lg font-semibold text-navy">Люкс</h3>
+								<p class="mb-4 text-sm leading-relaxed text-ink/70">Простора кімната з панорамними вікнами та преміальними зручностями.</p>
+								<a href={`${base}soon`} class="btn mt-auto w-full">Забронювати</a>
+							</div>
+						</article>
+					</div>
+				</div>
+
+				<!-- Картка «Про нас» -->
+				<div class="overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+					<div class="border-b border-cream-dark px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">Картка «Про нас» · номерний кружок</div>
+					<div class="bg-cream p-6">
+						<article class="rounded-2xl border border-cream-dark bg-white/90 p-6 shadow-lg shadow-navy/5">
+							<div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-bronze/15 text-bronze">
+								<span class="font-display text-xl font-bold">1</span>
+							</div>
+							<h3 class="mb-2 text-lg font-semibold text-navy">Наша історія</h3>
+							<p class="text-sm leading-relaxed text-ink/70">Arcada Hotel засновано у 2005 році як місце для відпочинку та розваг у Львові.</p>
+						</article>
+					</div>
+				</div>
+
+				<!-- Соц-іконки на navy -->
+				<div class="overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+					<div class="border-b border-cream-dark px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">Соц-іконки · «брівка» · на navy</div>
+					<div class="flex flex-col gap-4 bg-navy p-6">
+						<p class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Слідкуйте за нами</p>
+						<div class="flex gap-3">
+							<span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-cream ring-1 ring-white/30 transition hover:bg-bronze hover:ring-bronze">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+							</span>
+							<span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-cream ring-1 ring-white/30 transition hover:bg-bronze hover:ring-bronze">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+							</span>
+						</div>
+						<p class="text-sm text-cream/70">Круглі кнопки на navy: напівпрозора заливка + кільце, на ховері бронза.</p>
+					</div>
+				</div>
+
+				<!-- Точки каруселі -->
+				<div class="overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+					<div class="border-b border-cream-dark px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">Точки каруселі · активний стан</div>
+					<div class="flex flex-col gap-4 bg-cream p-6">
+						<div class="flex items-center gap-2.5">
+							<span class="h-2.5 w-6 rounded-full bg-bronze"></span>
+							<span class="h-2.5 w-2.5 rounded-full bg-navy/25"></span>
+							<span class="h-2.5 w-2.5 rounded-full bg-navy/25"></span>
+						</div>
+						<p class="text-sm leading-relaxed text-ink/65">Неактивна точка navy/25; активна розтягується в бронзову «таблетку».</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============ 04 · ФОРМА, РАДІУСИ, ТІНІ ============ -->
+	<section class="section">
+		<p class="mb-2 text-center text-sm font-semibold uppercase tracking-[0.25em] text-bronze">04</p>
+		<h2 class="section-title">Форма · радіуси, тіні, сітка</h2>
+		<div class="section-rule"></div>
+		<p class="mx-auto mb-10 max-w-2xl text-center text-ink/70">
+			Заокруглення працюють драбинкою: що більший блок, то м’якший кут. Тіні
+			завжди з відтінком navy і «низько-широкі», а не сірі. Контент центрується
+			в колонці до 80rem.
+		</p>
+
+		<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+			{
+				radii.map((r) => (
+					<div class="flex flex-col gap-4 rounded-2xl border border-cream-dark bg-white/90 p-5 shadow-lg shadow-navy/5">
+						<div class="flex h-20 items-center justify-center">
+							<div class={`h-16 bg-bronze ${r.w} ${r.cls}`}></div>
+						</div>
+						<div>
+							<h3 class="text-sm font-semibold text-ink">{r.title} <span class="font-mono text-xs text-bronze">{r.value}</span></h3>
+							<p class="mt-1 text-xs text-ink/60">{r.desc} <span class="font-mono">{r.token}</span></p>
+						</div>
+					</div>
+				))
+			}
+
+			<!-- Тінь картки -->
+			<div class="flex flex-col gap-4 rounded-2xl border border-cream-dark bg-white/90 p-5 shadow-lg shadow-navy/5">
+				<div class="flex h-20 items-center justify-center">
+					<div class="h-14 w-28 rounded-2xl border border-cream-dark bg-white shadow-lg shadow-navy/5"></div>
+				</div>
+				<div>
+					<h3 class="text-sm font-semibold text-ink">Тінь картки</h3>
+					<p class="mt-1 text-xs text-ink/60">М’яка тінь з відтінком navy: <span class="font-mono">shadow-lg · shadow-navy/5</span>.</p>
+				</div>
+			</div>
+
+			<!-- Тінь кнопки -->
+			<div class="flex flex-col gap-4 rounded-2xl border border-cream-dark bg-white/90 p-5 shadow-lg shadow-navy/5">
+				<div class="flex h-20 items-center justify-center">
+					<div class="h-14 w-28 rounded-2xl bg-bronze shadow-[0_10px_25px_-10px_rgb(0_0_0/0.35)]"></div>
+				</div>
+				<div>
+					<h3 class="text-sm font-semibold text-ink">Тінь кнопки</h3>
+					<p class="mt-1 text-xs text-ink/60"><span class="font-mono">0 10px 25px -10px rgb(0 0 0/.35)</span></p>
+				</div>
+			</div>
+
+			<!-- Лінія секції -->
+			<div class="flex flex-col gap-4 rounded-2xl border border-cream-dark bg-white/90 p-5 shadow-lg shadow-navy/5">
+				<div class="flex h-20 items-center justify-center">
+					<div class="h-0.75 w-16 rounded-full bg-bronze"></div>
+				</div>
+				<div>
+					<h3 class="text-sm font-semibold text-ink">Лінія секції</h3>
+					<p class="mt-1 text-xs text-ink/60">Бронза 4rem × 3px під заголовком. <span class="font-mono">.section-rule</span></p>
+				</div>
+			</div>
+
+			<!-- Контейнер -->
+			<div class="flex flex-col gap-4 rounded-2xl border border-cream-dark bg-white/90 p-5 shadow-lg shadow-navy/5">
+				<div class="flex h-20 flex-col items-center justify-center gap-1.5">
+					<div class="h-2.5 w-28 rounded bg-cream-dark"></div>
+					<div class="h-2.5 w-20 rounded bg-bronze"></div>
+				</div>
+				<div>
+					<h3 class="text-sm font-semibold text-ink">Контейнер</h3>
+					<p class="mt-1 text-xs text-ink/60"><span class="font-mono">max-width: 80rem</span>, паддінги 1.25 / 4rem. <span class="font-mono">.section</span></p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============ 05 · РУХ ТА ЗОБРАЖЕННЯ ============ -->
+	<section class="bg-cream-dark/30">
+		<div class="section">
+			<p class="mb-2 text-center text-sm font-semibold uppercase tracking-[0.25em] text-bronze">05</p>
+			<h2 class="section-title">Рух та зображення</h2>
+			<div class="section-rule"></div>
+			<p class="mx-auto mb-10 max-w-2xl text-center text-ink/70">
+				Анімація стримана й службова: швидка підказка, що елемент
+				інтерактивний. Світлини завжди «приглушені» градієнтом navy, щоб
+				кремовий текст читався поверх.
+			</p>
+
+			<div class="grid gap-5 md:grid-cols-2">
+				<!-- Тайминги -->
+				<div class="rounded-3xl border border-cream-dark bg-white/90 p-6 shadow-lg shadow-navy/5 sm:p-8">
+					<h3 class="mb-4 text-lg font-semibold text-navy">Тайминги та переходи</h3>
+					<ul class="flex flex-col gap-3">
+						{
+							motions.map((m) => (
+								<li class="flex gap-3 text-sm text-ink/75">
+									<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze"></span>
+									<span><b class="font-semibold text-ink">{m.b}</b>: {m.t}</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+
+				<!-- Оверлей на фото -->
+				<div class="overflow-hidden rounded-3xl border border-cream-dark bg-white/90 shadow-lg shadow-navy/5">
+					<div class="relative min-h-52">
+						<div
+							class="absolute inset-0 bg-cover bg-center"
+							style={`background-image: url('${carousel1.src}')`}
+							role="img"
+							aria-label="Приклад оверлея на фото"
+						></div>
+						<div class="absolute inset-0 bg-linear-to-t from-navy/85 via-navy/35 to-transparent" aria-hidden="true"></div>
+						<div class="absolute bottom-0 left-0 p-6 text-cream">
+							<h3 class="text-2xl font-bold text-cream!">Готель</h3>
+							<p class="mt-1 text-sm text-cream/90">Смак Львова в кожній деталі</p>
+						</div>
+					</div>
+					<p class="p-5 text-sm leading-relaxed text-ink/65">
+						Градієнт <span class="font-mono text-bronze">from-navy/85 → transparent</span> знизу вгору. Текст поверх кремовий.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============ 06 · ГОЛОС БРЕНДУ ============ -->
+	<section class="section">
+		<p class="mb-2 text-center text-sm font-semibold uppercase tracking-[0.25em] text-bronze">06</p>
+		<h2 class="section-title">Голос бренду</h2>
+		<div class="section-rule"></div>
+		<p class="mx-auto mb-10 max-w-2xl text-center text-ink/70">
+			Теплий, гостинний, на «ви». Мова контенту українська. Обіцянки
+			конкретні: комфорт, Львів, турбота про гостя.
+		</p>
+
+		<div class="rounded-3xl border border-cream-dark bg-white/90 p-6 shadow-lg shadow-navy/5 sm:p-10">
+			<blockquote class="max-w-xl font-display text-2xl font-medium italic leading-snug text-navy sm:text-3xl">
+				«Не просто готель, а місце для справжнього релаксу.»
+			</blockquote>
+			<p class="mt-3 text-sm text-ink/50">Слоган Arcada Hotel</p>
+			<div class="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+				{
+					voice.map((v) => (
+						<div>
+							<b class="mb-1 block font-display text-lg font-semibold text-navy">{v.b}</b>
+							<span class="text-sm leading-relaxed text-ink/70">{v.t}</span>
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="mt-5 grid gap-5 md:grid-cols-2">
+			<div class="rounded-2xl border border-cream-dark bg-white/90 p-6 shadow-lg shadow-navy/5">
+				<h3 class="mb-4 flex items-center gap-2.5 text-base font-bold text-emerald-700">
+					<span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-sm text-white">✓</span>
+					Робити
+				</h3>
+				<ul class="flex flex-col gap-2.5">
+					{dos.map((d) => <li class="text-sm leading-relaxed text-ink/70">{d}</li>)}
+				</ul>
+			</div>
+			<div class="rounded-2xl border border-cream-dark bg-white/90 p-6 shadow-lg shadow-navy/5">
+				<h3 class="mb-4 flex items-center gap-2.5 text-base font-bold text-rose-700">
+					<span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-rose-600 text-sm text-white">✕</span>
+					Не робити
+				</h3>
+				<ul class="flex flex-col gap-2.5">
+					{donts.map((d) => <li class="text-sm leading-relaxed text-ink/70">{d}</li>)}
+				</ul>
+			</div>
+		</div>
+
+		<p class="mx-auto mt-12 max-w-2xl text-center text-sm text-ink/50">
+			Дизайн-систему зібрано з реального коду проєкту:
+			<span class="font-mono text-bronze">global.css</span> (токени
+			<span class="font-mono">@theme</span>, класи <span class="font-mono">.btn</span>,
+			<span class="font-mono">.section</span>) та компонентів Astro.
+		</p>
+	</section>
+</Layout>
