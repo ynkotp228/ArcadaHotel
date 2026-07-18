@@ -9,6 +9,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [sitemap()],
-  site: 'https://ynkotp228.github.io',
+  site: 'https://ynkotp-webdev.github.io',
   base: '/ArcadaHotel/',
 });
